@@ -46,6 +46,8 @@ bool isObjectDetected(int ifredSensor) {
 
 void setMotor(int index, int angle) {
 /**
+ * 특정 index의 모터 각도를 angle로 설정
+ * 모터부 아두이노에 요청함
  * 0: 센서칸 뚜껑
  * 1: 일반쓰레기 뚜껑
  * 2: 캔 쓰레기 뚜껑
