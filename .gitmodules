@@ -1,0 +1,3 @@
+[submodule "webserver"]
+	path = webserver
+	url = https://github.com/yuyeol3/smart-trashbin-server
