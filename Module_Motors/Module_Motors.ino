@@ -3,6 +3,12 @@
 #define SENSOR_ARDUINO Serial1
 
 Servo servos[4];
+/**
+ * 0: 쓰레기통 뚜껑
+ * 1: 센서칸 뚜껑
+ * 2: 일반쓰레기 뚜껑
+ * 3: 캔 쓰레기 뚜껑
+ */
 
 long prev, current;
 bool open =  false;
@@ -25,6 +31,9 @@ void setup() {
   SENSOR_ARDUINO.setTimeout(1000);
 }
 
+/**
+ * 모터를 천천히 작동시키는 함수
+ */
 void motorWriteSmooth(Servo &s, int angle) {
   int current_angle = s.read();
   int dA = angle - current_angle;
@@ -46,17 +55,6 @@ void motorWriteSmooth(Servo &s, int angle) {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  // if (SENSOR_ARDUINO.available()) {
-
-
-  //   // delay(100);
-  //   int index = SENSOR_ARDUINO.parseInt() + 1;
-  //   delay(500);
-  //   int angle = SENSOR_ARDUINO.parseInt();
-  //   Serial.println(String(index) + " " + angle);
-  //   servos[index].write(angle);
-  // }
   if (SENSOR_ARDUINO.available()) {
       String data = SENSOR_ARDUINO.readStringUntil('\n'); // 한 줄의 데이터를 읽음
       int separatorIndex = data.indexOf(',');            // 쉼표로 구분된 데이터 확인
@@ -66,7 +64,6 @@ void loop() {
 
           if (index >= 0 && index < 4 && angle >= 0 && angle <= 180) {
               motorWriteSmooth(servos[index], angle);
-              // servos[index].write(angle);
               Serial.println("Index: " + String(index) + ", Angle: " + String(angle));
           } else {
               Serial.println("Invalid data: " + data);

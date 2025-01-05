@@ -1,22 +1,14 @@
 #include <Servo.h>
 #define MOTOR_ARDUINO Serial1
-// int serviPin[] = { 10, 11, 12, 13 };
+
+
 int lightsensorPin = A0;
-// int speakerPin = 9;
+
 int canSensorPin = 2;
 int IRdigitalPin = 6;
-// int TOFsensorPin[] = { 2, 3 };
-// int ultraTrig = 22;
-// int ultraEcho = 23;
 int razerPin = 9;
-// int IRanalogPin = 54;
-// int TOFPin[] = {18, 19}; // 18 is yellow, 19 is white
 unsigned long previous, current;
 
-
-
-
-//디지털 핀 설정
 
 void setup() {
   Serial.begin(9600);
@@ -32,23 +24,6 @@ void setup() {
   previous = millis();
 }
 
-// float ultraSonicDistance() {   // need more power
-//   digitalWrite(ultraTrig, HIGH);
-//   delay(10);
-//   digitalWrite(ultraTrig, LOW);
-
-//   float duration = pulseIn(ultraEcho, HIGH);
-
-//   float distance = duration * 0.17;   // unit is meter
-
-//   return distance;
-// }
-
-// int distanceTOF() {
-//   if (Serial.available()) {
-//     return Serial1.read();
-//   }
-// }
 
 int isPlastic() {
   int light = analogRead(lightsensorPin);
@@ -64,23 +39,17 @@ bool isMetal() {
   return !digitalRead(canSensorPin);
 }
 
-// bool isObjectDetected(int ifredSensor) {
-//   tone(speakerPin, 100, 1);
-//   return !digitalRead(ifredSensor);
-// }
-
 
 bool isObjectDetected(int ifredSensor) {
   return !digitalRead(ifredSensor);
 }
 
 void setMotor(int index, int angle) {
-  /*
-  0 -> sensing part to slope
-  1 -> others
-  2 -> pet
-
-  */
+/**
+ * 0: 센서칸 뚜껑
+ * 1: 일반쓰레기 뚜껑
+ * 2: 캔 쓰레기 뚜껑
+ */
   Serial.print("REQUEST : ");
   Serial.print(index);
   Serial.print(" ");
